@@ -80,9 +80,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsBeingPlaced: 0
   Name: Stool
-  Price: 10
+  Price: 5
   TileSizeX: 1
   TileSizeY: 1
+  Flavor: A plain wooden stool. Because Lonk is a young orlf, he is too short to climb
+    over them.
 --- !u!212 &212861542558828738
 SpriteRenderer:
   m_ObjectHideFlags: 1

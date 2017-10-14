@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61910502190316334}
   - component: {fileID: 114439607120607088}
   m_Layer: 9
-  m_Name: Bed 2x2
+  m_Name: Bed
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,9 +80,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsBeingPlaced: 0
   Name: Bed
-  Price: 10
+  Price: 15
   TileSizeX: 2
   TileSizeY: 2
+  Flavor: A large double bed. Despite living alone as well as the abject poverty of
+    the village, this is the only variety available.
 --- !u!212 &212387236714423790
 SpriteRenderer:
   m_ObjectHideFlags: 1

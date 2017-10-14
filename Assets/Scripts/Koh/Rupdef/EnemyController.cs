@@ -8,6 +8,9 @@ namespace Koh.Rupdef
     [RequireComponent(typeof(Seeker), typeof(Rigidbody2D))]
     public class EnemyController : MonoBehaviour
     {
+        public float Boredom;
+
+        [Space]
         public float Speed;
         public float MinDistance;
         public float PathSearchInterval;
@@ -16,12 +19,17 @@ namespace Koh.Rupdef
         public float ObjectSearchInterval;
         public LayerMask ObjectSearchMask;
 
+        public float BlupeeSearchRadius;
+        public float BlupeeSearchInterval;
+        public LayerMask BlupeeSearchMask;
+
         public float ActionInterval;
 
         [Header("Debug")]
         public int Waypoint;
 
-        public Chest Target;
+        public Pot TargetPot;
+        public Chest TargetChest;
         public Transform TargetDoor;
 
         public Seeker Seeker;
@@ -30,8 +38,11 @@ namespace Koh.Rupdef
 
         public Path Path;
 
+        public float TalkTimer;
+        public float ShoveTimer;
         public float PathSearchTimer;
         public float ObjectSearchTimer;
+        public float BlupeeSearchTimer;
         public float ActionTimer;
 
         public ActionTarget[] Targets;
@@ -44,14 +55,41 @@ namespace Koh.Rupdef
 
         private void SearchPath()
         {
-            if (Target && Target.Bupees > 0)
+            if (Boredom <= 0)
+                goto none;
+
+            if (TargetPot && TargetPot.Bupees > 0)
                 return;
 
+            if (TargetChest && TargetChest.Bupees > 0)
+                return;
+
+            if (GameManager.Instance.Pots.Length > 0)
+            {
+                var filledPots = GameManager.Instance.Pots
+                    .Where(p => p && p.Bupees > 0)
+                    .ToArray();
+
+                if (filledPots.Length == 0)
+                    goto chests;
+
+                var pot = filledPots[UnityEngine.Random.Range(0, filledPots.Length)];
+                if (pot)
+                {
+                    Seeker.StartPath(transform.position, pot.transform.position, OnPathComplete);
+                    TargetPot = pot;
+                    TargetDoor = null;
+                }
+
+                if (TargetPot)
+                    return;
+            }
+
+            chests:
             if (GameManager.Instance.Chests.Length > 0)
             {
                 var filledChests = GameManager.Instance.Chests
                     .Where(c => c.Bupees > 0)
-                    .Where(c => !c.GetComponent<Placeable>().IsBeingPlaced)
                     .ToArray();
 
                 if (filledChests.Length == 0)
@@ -61,7 +99,8 @@ namespace Koh.Rupdef
                 if (chest)
                 {
                     Seeker.StartPath(transform.position, chest.transform.position, OnPathComplete);
-                    Target = chest;
+                    TargetChest = chest;
+                    TargetPot = null;
                     TargetDoor = null;
                 }
             }
@@ -80,7 +119,8 @@ namespace Koh.Rupdef
             var doors = GameManager.Instance.Doors;
             var door = doors[UnityEngine.Random.Range(0, doors.Length)];
             TargetDoor = door.transform;
-            Target = null;
+            TargetPot = null;
+            TargetChest = null;
             Seeker.StartPath(transform.position, door.transform.position, OnPathComplete);
 
             return;
@@ -98,6 +138,19 @@ namespace Koh.Rupdef
 
         }
 
+        private void SearchBlupees()
+        {
+            var hits = Physics2D.OverlapCircleAll(transform.position, BlupeeSearchRadius, BlupeeSearchMask);
+            hits = hits.Where(hit => hit).ToArray();
+
+            var blupeeGet = hits.Select(hit => hit.transform.GetComponent<Blupee>())
+                .OrderBy(blupee => Vector2.Distance(blupee.transform.position, transform.position))
+                .FirstOrDefault();
+
+            if(blupeeGet)
+                Destroy(blupeeGet.gameObject);
+        }
+
         private void TryAction()
         {
             for (var i = 0; i < Targets.Length; ++i)
@@ -109,12 +162,27 @@ namespace Koh.Rupdef
 
         private bool HandleAction(ActionTarget target)
         {
+            if (TalkTimer > 0)
+                return false;
+
             var chest = target as Chest;
             if (chest)
             {
                 if (chest.Bupees > 0)
                 {
                     --chest.Bupees;
+                    --GameManager.Instance.Player.HiddenAmount;
+                    return true;
+                }
+            }
+
+            var pot = target as Pot;
+            if (pot)
+            {
+                if (pot.Bupees > 0)
+                {
+                    GameManager.Instance.Player.HiddenAmount -= pot.Bupees;
+                    pot.Smash();
                     return true;
                 }
             }
@@ -122,11 +190,34 @@ namespace Koh.Rupdef
             return false;
         }
 
+        private void Update()
+        {
+            UpdateTalk();
+        }
+
         private void FixedUpdate()
         {
             UpdatePath();
             UpdateObjects();
+            UpdateBlupees();
             UpdateActions();
+        }
+
+        private void UpdateTalk()
+        {
+            if ((TalkTimer -= Time.deltaTime) < 0)
+            {
+                TalkTimer = 0;
+            }
+        }
+
+        private void UpdateBlupees()
+        {
+            if ((BlupeeSearchTimer -= Time.fixedDeltaTime) <= 0)
+            {
+                BlupeeSearchTimer = BlupeeSearchInterval;
+                SearchBlupees();
+            }
         }
 
         private void UpdateObjects()
@@ -149,11 +240,17 @@ namespace Koh.Rupdef
 
         private void UpdatePath()
         {
+            if ((Boredom -= Time.fixedDeltaTime) <= 0)
+                Boredom = 0;
+
             if ((PathSearchTimer -= Time.fixedDeltaTime) <= 0)
             {
                 PathSearchTimer = PathSearchInterval;
                 SearchPath();
             }
+
+            if (TalkTimer > 0)
+                return;
 
             if (Path == null || Path.error)
                 return;
@@ -175,7 +272,6 @@ namespace Koh.Rupdef
 
         private void OnPathComplete(Path path)
         {
-            print("path complete");
             Waypoint = 0;
 
             Path = path;

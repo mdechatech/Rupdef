@@ -17,9 +17,9 @@ TagManager:
   - Ground
   - Obstacle
   - Player
-  - 
-  - 
-  - 
+  - Enemies
+  - Blupees
+  - Walls
   - 
   - 
   - 
@@ -48,6 +48,12 @@ TagManager:
   - name: Furniture
     uniqueID: 289823493
     locked: 0
-  - name: Characters
+  - name: Player
     uniqueID: 850310913
+    locked: 0
+  - name: Enemies
+    uniqueID: 3956623987
+    locked: 0
+  - name: UI
+    uniqueID: 1955898071
     locked: 0

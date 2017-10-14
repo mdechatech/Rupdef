@@ -11,6 +11,8 @@ public class Placeable : MonoBehaviour
     public int TileSizeX;
     public int TileSizeY;
 
+    [Multiline]
+    public string Flavor;
 
     private void Awake()
     {

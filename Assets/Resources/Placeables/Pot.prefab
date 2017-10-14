@@ -9,46 +9,46 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1189289327887008}
+  m_RootGameObject: {fileID: 1693205823032818}
   m_IsPrefabParent: 1
---- !u!1 &1189289327887008
+--- !u!1 &1693205823032818
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4464370969160834}
-  - component: {fileID: 212722137458455746}
-  - component: {fileID: 61485763839252304}
-  - component: {fileID: 114664390773457108}
-  - component: {fileID: 114323985048889650}
+  - component: {fileID: 4548648140313200}
+  - component: {fileID: 212912909587314244}
+  - component: {fileID: 61386067805627212}
+  - component: {fileID: 114320617622116578}
+  - component: {fileID: 114789053866279036}
   m_Layer: 9
-  m_Name: Chest
+  m_Name: Pot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4464370969160834
+--- !u!4 &4548648140313200
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1189289327887008}
+  m_GameObject: {fileID: 1693205823032818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.24, y: 0.01, z: 0}
+  m_LocalPosition: {x: -1.8035915, y: 1.1005845, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61485763839252304
+--- !u!61 &61386067805627212
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1189289327887008}
+  m_GameObject: {fileID: 1693205823032818}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -68,43 +68,45 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.44, y: 0.44}
   m_EdgeRadius: 0
---- !u!114 &114323985048889650
+--- !u!114 &114320617622116578
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1189289327887008}
+  m_GameObject: {fileID: 1693205823032818}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73fbed13d663ab742a8a69293d081be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   IsBeingPlaced: 0
-  Name: Chest
-  Price: 10
+  Name: Pot
+  Price: 5
   TileSizeX: 1
   TileSizeY: 1
-  Flavor: Chests can hold many more Blupees than pots, and they take a while to loot.
-    However, once looted you can't get your Blupees back.
---- !u!114 &114664390773457108
+  Flavor: Pots are easy to smash and attract the most attention. When smashed, you
+    have a chance to retrieve some of the Blupees as they scatter.
+--- !u!114 &114789053866279036
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1189289327887008}
+  m_GameObject: {fileID: 1693205823032818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c800a00fc746419a9c511d8259a25ee8, type: 3}
+  m_Script: {fileID: 11500000, guid: a37dca05d90285c4181fd897dc9cbe1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Bupees: 0
-  Capacity: 10
---- !u!212 &212722137458455746
+  Capacity: 5
+  BlupeePrefab: {fileID: 114797045320096454, guid: 98cd159032461e446bd4a01b0c3adcc2,
+    type: 2}
+--- !u!212 &212912909587314244
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1189289327887008}
+  m_GameObject: {fileID: 1693205823032818}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -131,7 +133,7 @@ SpriteRenderer:
   m_SortingLayerID: 289823493
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 67d6812646795184e90b537302a38684, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fc804c23dd314e04189d3ad2407a8ab1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
