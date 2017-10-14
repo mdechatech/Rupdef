@@ -236,11 +236,14 @@ public class AIPath : AIBase {
 		if (path.vectorPath.Count == 1) path.vectorPath.Add(path.vectorPath[0]);
 		interpolator.SetPath(path.vectorPath);
 
-		var graph = AstarData.GetGraph(path.path[0]) as ITransformedGraph;
-		movementPlane = graph != null ? graph.transform : GraphTransform.identityTransform;
+        // REPLACEMENT
+        // var graph = AstarData.GetGraph(path.path[0]) as ITransformedGraph;
+        // movementPlane = graph != null ? graph.transform : GraphTransform.identityTransform;
+	    var graphRotation = new Vector3(-90, 0, 0);
+	    movementPlane = new GraphTransform(Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(graphRotation), Vector3.one));
 
-		// Reset some variables
-		TargetReached = false;
+        // Reset some variables
+        TargetReached = false;
 
 		// Simulate movement from the point where the path was requested
 		// to where we are right now. This reduces the risk that the agent

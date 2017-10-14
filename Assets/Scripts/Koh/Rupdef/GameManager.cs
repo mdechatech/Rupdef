@@ -8,6 +8,10 @@ namespace Koh.Rupdef
         public static GameManager Instance;
 
         [Header("Debug")]
+        public AstarPath Graph;
+
+        public GameObject[] Doors;
+
         public Chest[] Chests;
 
         public Placeable[] Placeables;
@@ -16,11 +20,29 @@ namespace Koh.Rupdef
         private void Awake()
         {
             Instance = this;
-            Chests = FindObjectsOfType<Chest>();
+            Doors = GameObject.FindGameObjectsWithTag("Door");
+            Chests = FindObjectsOfType<Chest>()
+                .Where(c => !c.GetComponent<Placeable>().IsBeingPlaced)
+                .ToArray();
+            Graph = FindObjectOfType<AstarPath>();
             Placeables = Resources.LoadAll<Placeable>("Placeables")
                 .ToList()
                 .OrderBy(placeable => placeable.Price)
                 .ToArray();
+        }
+
+        public void UpdateGraph()
+        {
+            Graph.Scan();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                Awake();
+                UpdateGraph();
+            }
         }
     }
 }
