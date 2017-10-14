@@ -5,6 +5,7 @@ public class Placeable : MonoBehaviour
 {
     public bool IsBeingPlaced;
 
+    public string Name;
     public int Price;
 
     public int TileSizeX;

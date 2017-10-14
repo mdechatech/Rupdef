@@ -15,7 +15,7 @@ namespace Koh.Rupdef
     {
         Place,
         Remove,
-        Interact
+        Use
     }
 
     [RequireComponent(typeof(Rigidbody2D))]
@@ -67,6 +67,8 @@ namespace Koh.Rupdef
         public Rigidbody2D Rigidbody;
 
         public ActionTarget Target;
+        public Placeable TargetPlaceable;
+
 
         private void Reset()
         {
@@ -122,6 +124,16 @@ namespace Koh.Rupdef
                 case PlaceAction.Place:
                     PlaceCurrent();
                     break;
+
+                case PlaceAction.Use:
+                    if (Target)
+                        HandleAction(Target);
+                    break;
+
+                case PlaceAction.Remove:
+                    if (TargetPlaceable)
+                        HandleRemove(TargetPlaceable);
+                    break;
             }
         }
 
@@ -145,6 +157,11 @@ namespace Koh.Rupdef
             {
                 HandleChest(chest);
             }
+        }
+
+        private void HandleRemove(Placeable target)
+        {
+            Destroy(target.gameObject);
         }
 
         public void BeginPlaceMode()
@@ -183,6 +200,10 @@ namespace Koh.Rupdef
             if (!CurrentPlaceable)
                 return;
 
+            if (CurrentPlaceable.Price > Bupees)
+                return;
+
+
             var testCollider = CurrentPlaceable.GetComponentInChildren<BoxCollider2D>();
             if (testCollider)
             {
@@ -193,7 +214,7 @@ namespace Koh.Rupdef
                 var amount = testCollider.OverlapCollider(
                     new ContactFilter2D {useLayerMask = true, layerMask = ActionMask},
                     results);
-                print(amount);
+
                 if (amount > 0)
                 {
                     testCollider.enabled = false;
@@ -203,6 +224,8 @@ namespace Koh.Rupdef
 
                 testCollider.enabled = false;
             }
+
+            Bupees -= CurrentPlaceable.Price;
 
             var placeable = Instantiate(CurrentPlaceable);
             placeable.IsBeingPlaced = false;
@@ -305,12 +328,12 @@ namespace Koh.Rupdef
             if (!target)
             {
                 Target = null;
+                TargetPlaceable = null;
                 return;
             }
 
+            TargetPlaceable = target.transform.GetComponent<Placeable>();
             Target = target.transform.GetComponent<ActionTarget>();
-            if (!Target)
-                return;
         }
 
         #region Interaction

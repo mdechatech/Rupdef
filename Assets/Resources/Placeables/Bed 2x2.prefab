@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBeingPlaced: 0
+  Name: Bed
   Price: 10
   TileSizeX: 2
   TileSizeY: 2

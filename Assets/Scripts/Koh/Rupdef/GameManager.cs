@@ -10,10 +10,10 @@ namespace Koh.Rupdef
         [Header("Debug")]
         public AstarPath Graph;
 
+        public PlayerController Player;
+
         public GameObject[] Doors;
-
         public Chest[] Chests;
-
         public Placeable[] Placeables;
         
 
@@ -24,6 +24,7 @@ namespace Koh.Rupdef
             Chests = FindObjectsOfType<Chest>()
                 .Where(c => !c.GetComponent<Placeable>().IsBeingPlaced)
                 .ToArray();
+            Player = FindObjectOfType<PlayerController>();
             Graph = FindObjectOfType<AstarPath>();
             Placeables = Resources.LoadAll<Placeable>("Placeables")
                 .ToList()

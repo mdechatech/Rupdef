@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsBeingPlaced: 0
+  Name: Stool
   Price: 10
   TileSizeX: 1
   TileSizeY: 1
