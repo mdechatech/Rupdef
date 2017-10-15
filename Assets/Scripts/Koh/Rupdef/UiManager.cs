@@ -17,7 +17,8 @@ namespace Koh.Rupdef
 
         [Space]
         public CanvasGroup ErrorGroup;
-        public Text ErrorText;
+        public Text ErrorTitleText;
+        public Text ErrorDescriptionText;
 
         public CanvasGroup PlaceObjectGroup;
         public Text PlaceObjectText;
@@ -30,8 +31,21 @@ namespace Koh.Rupdef
         [Space]
         public Image EnergyImage;
 
+        public Text DayText;
         public Text HiddenAmountText;
         public Text SalvagedAmountText;
+
+        [Header("Success")]
+        public CanvasGroup SuccessGroup;
+        public Text SuccessSalvagedText;
+        public Text SuccessStoredText;
+        public Text SuccessPensionText;
+        public Text SuccessInterestText;
+        public Text SuccessTotalText;
+
+        [Header("Debug")]
+        public bool ShowingError;
+        public float ErrorTimer;
 
         // Update is called once per frame
         void Update()
@@ -68,8 +82,26 @@ namespace Koh.Rupdef
 
                 HiddenAmountText.text = player.HiddenAmount.ToString();
                 SalvagedAmountText.text = player.SalvagedAmount.ToString();
-
             }
+
+            if (ShowingError)
+            {
+                if ((ErrorTimer -= Time.deltaTime) < 0)
+                {
+                    ErrorTimer = 0;
+                    ShowingError = false;
+                    ErrorGroup.alpha = 0;
+                }
+            }
+        }
+
+        public void ShowError(string title, string text, float duration = 5)
+        {
+            ErrorTimer = duration;
+            ErrorGroup.alpha = 1;
+            ShowingError = true;
+            ErrorTitleText.text = title;
+            ErrorDescriptionText.text = text;
         }
     }
 }

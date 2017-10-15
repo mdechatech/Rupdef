@@ -15,6 +15,8 @@ namespace Koh.Rupdef
         public float MinDistance;
         public float PathSearchInterval;
 
+        public float ExitRadius;
+
         public float ObjectSearchRadius;
         public float ObjectSearchInterval;
         public LayerMask ObjectSearchMask;
@@ -162,6 +164,9 @@ namespace Koh.Rupdef
 
         private bool HandleAction(ActionTarget target)
         {
+            if (Boredom <= 0)
+                return false;
+
             if (TalkTimer > 0)
                 return false;
 
@@ -197,10 +202,27 @@ namespace Koh.Rupdef
 
         private void FixedUpdate()
         {
+            if ((Boredom -= Time.fixedDeltaTime) < 0)
+                Boredom = 0;
+
+            UpdateExit();
             UpdatePath();
             UpdateObjects();
             UpdateBlupees();
             UpdateActions();
+        }
+
+        private void UpdateExit()
+        {
+            if (TargetDoor)
+            {
+                var distance = Vector2.Distance(transform.position, TargetDoor.position);
+                if (distance <= ExitRadius)
+                {
+                    print("cya");
+                    Destroy(gameObject);
+                }
+            }
         }
 
         private void UpdateTalk()
@@ -240,8 +262,6 @@ namespace Koh.Rupdef
 
         private void UpdatePath()
         {
-            if ((Boredom -= Time.fixedDeltaTime) <= 0)
-                Boredom = 0;
 
             if ((PathSearchTimer -= Time.fixedDeltaTime) <= 0)
             {

@@ -16,7 +16,7 @@ namespace Koh.Rupdef
     {
         Buy,
         Sell,
-        Use
+        Hide
     }
 
     [RequireComponent(typeof(Rigidbody2D))]
@@ -190,7 +190,7 @@ namespace Koh.Rupdef
                     PlaceCurrent();
                     break;
 
-                case PlaceAction.Use:
+                case PlaceAction.Hide:
                     if (Target)
                         HandleAction(Target);
                     break;
@@ -453,14 +453,14 @@ namespace Koh.Rupdef
         {
             if (PlaceMode)
             {
-                if ((PlaceAction != PlaceAction.Use && PlaceAction != PlaceAction.Sell) ||
+                if ((PlaceAction != PlaceAction.Hide && PlaceAction != PlaceAction.Sell) ||
                     (!TargetPlaceable && !Target))
                 {
                     Tooltip.gameObject.SetActive(false);
                     return;
                 }
 
-                if (PlaceAction == PlaceAction.Use)
+                if (PlaceAction == PlaceAction.Hide)
                 {
                     if (TargetPlaceable)
                     {
@@ -610,7 +610,7 @@ namespace Koh.Rupdef
             if (TalkTimer > 0)
                 return;
 
-            if ((Energy += Time.deltaTime * EnergyRegenRate) > Energy)
+            if ((Energy += Time.deltaTime * EnergyRegenRate) > EnergyMax)
                 Energy = EnergyMax;
         }
 
