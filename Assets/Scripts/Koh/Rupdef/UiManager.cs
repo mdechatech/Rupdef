@@ -40,7 +40,7 @@ namespace Koh.Rupdef
         public Text SuccessSalvagedText;
         public Text SuccessStoredText;
         public Text SuccessPensionText;
-        public Text SuccessInterestText;
+        public Text SuccessInsuranceText;
         public Text SuccessTotalText;
 
         [Header("Debug")]

@@ -19,15 +19,10 @@ namespace Koh.Rupdef
         public float BoredomBase;
         public float BoredomPerDay;
 
+        public int PotInsurance;
+
         [Range(0, 1)]
         public float BoredomVariance;
-
-
-        [Range(0, 1)]
-        public float Interest;
-
-        public int InterestMax;
-
 
         public LayerMask ObstacleMask;
 
@@ -38,6 +33,8 @@ namespace Koh.Rupdef
         [Header("Debug")]
         public int Wave;
         public AstarPath Graph;
+
+        public int PotsSmashed;
 
         public bool WaitingForWaveConfirm;
         public bool WaveSuccessful;
@@ -127,23 +124,31 @@ namespace Koh.Rupdef
         {
             WaitingForWaveConfirm = true;
 
+            // Collect free-floating blupees
+            var freeBlupees = FindObjectsOfType<Blupee>();
+            for (var i = 0; i < freeBlupees.Length; ++i)
+            {
+                ++Player.SalvagedAmount;
+                Destroy(freeBlupees[i].gameObject);
+            }
+
             var hiddenAmount = Player.HiddenAmount;
             var salvagedAmount = Player.SalvagedAmount;
 
             var totalFloating = hiddenAmount + salvagedAmount;
 
-            var interest = Mathf.CeilToInt(Mathf.Clamp(totalFloating * Interest, 1, InterestMax));
+            var insurance = PotsSmashed * PotInsurance;
             var pension = PensionBase + PensionPerDay * Wave;
 
             Ui.SuccessGroup.alpha = 1;
-            Ui.SuccessInterestText.text = interest.ToString();
+            Ui.SuccessInsuranceText.text = insurance.ToString();
             Ui.SuccessPensionText.text = pension.ToString();
             Ui.SuccessSalvagedText.text = salvagedAmount.ToString();
             Ui.SuccessStoredText.text = hiddenAmount.ToString();
 
-            var total = hiddenAmount + salvagedAmount + interest + pension;
-            Player.HideAmount = HideAmountBase + HideAmountPerDay * (Wave + 1) - hiddenAmount;
-            Player.SpendAmount = total;
+            var total = hiddenAmount + salvagedAmount + insurance + pension;
+            Player.HideAmount = HideAmountBase + HideAmountPerDay * Wave - hiddenAmount;
+            Player.SpendAmount += total;
 
             Ui.SuccessTotalText.text = total.ToString();
 
@@ -154,11 +159,12 @@ namespace Koh.Rupdef
         {
             Ui.SuccessGroup.alpha = 0;
             FinishCheckTimer = 3;
+            PotsSmashed = 0;
 
             if (Player.HideAmount > 0)
             {
                 Ui.ShowError("NEGATORY",
-                    "You need to hide ALL of your Blupees.",
+                    "You still have some Blupees to hide!",
                     3);
                 return;
             }
@@ -177,8 +183,6 @@ namespace Koh.Rupdef
             HiddenAmount = Pots.Select(p => p ? p.Bupees : 0)
                 .Concat(Chests.Select(c => c ? c.Bupees : 0))
                 .Sum();
-            Player.HideAmount = 0;
-            Player.SpendAmount = 0;
 
             Player.EndPlaceMode();
             Ui.PlaceModeGroup.alpha = 0;

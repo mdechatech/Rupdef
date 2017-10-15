@@ -346,7 +346,7 @@ RectTransform:
   - {fileID: 586731518}
   - {fileID: 1328585255}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -384,7 +384,7 @@ MonoBehaviour:
   SuccessSalvagedText: {fileID: 1502797809}
   SuccessStoredText: {fileID: 1238755804}
   SuccessPensionText: {fileID: 350203415}
-  SuccessInterestText: {fileID: 236721549}
+  SuccessInsuranceText: {fileID: 236721549}
   SuccessTotalText: {fileID: 58232185}
   ShowingError: 0
   ErrorTimer: 0
@@ -667,7 +667,7 @@ GameObject:
   - component: {fileID: 236721550}
   - component: {fileID: 236721549}
   m_Layer: 5
-  m_Name: Interest Text
+  m_Name: Insurance Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -983,7 +983,7 @@ RectTransform:
   - {fileID: 677376333}
   - {fileID: 2117030070}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1195,7 +1195,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360603800}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1217,7 +1217,7 @@ Transform:
   - {fileID: 418998141}
   - {fileID: 870768034}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &372954988
 GameObject:
@@ -3188,7 +3188,7 @@ Transform:
   m_LocalScale: {x: 0.48, y: 0.48, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &839822830
 MonoBehaviour:
@@ -3987,7 +3987,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1053783513
 GameObject:
@@ -4074,7 +4074,7 @@ GameObject:
   - component: {fileID: 1075578618}
   - component: {fileID: 1075578617}
   m_Layer: 5
-  m_Name: Interest
+  m_Name: Pot Insurance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4130,7 +4130,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Interest
+  m_Text: Pot Insurance
 --- !u!222 &1075578618
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5117,7 +5117,7 @@ RectTransform:
   - {fileID: 342204131}
   - {fileID: 1396447590}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5680,7 +5680,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1476228559
 GameObject:
@@ -5933,7 +5933,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1503961539
 GameObject:
@@ -6186,7 +6186,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1577500315
 GameObject:
@@ -6297,7 +6297,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1605100410
 GameObject:
@@ -7656,9 +7656,8 @@ MonoBehaviour:
   HideAmountPerDay: 5
   BoredomBase: 15
   BoredomPerDay: 2
+  PotInsurance: 4
   BoredomVariance: 0.2
-  Interest: 0.25
-  InterestMax: 20
   ObstacleMask:
     serializedVersion: 2
     m_Bits: 0
@@ -7666,6 +7665,7 @@ MonoBehaviour:
   StartButton: Start
   Wave: 0
   Graph: {fileID: 0}
+  PotsSmashed: 0
   WaitingForWaveConfirm: 0
   WaveSuccessful: 0
   Player: {fileID: 0}
@@ -7810,7 +7810,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1968783200
 GameObject:

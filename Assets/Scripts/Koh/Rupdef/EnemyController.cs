@@ -177,6 +177,7 @@ namespace Koh.Rupdef
                 {
                     --chest.Bupees;
                     --GameManager.Instance.Player.HiddenAmount;
+                    ActionTimer = ActionInterval * 1.5f;
                     return true;
                 }
             }
