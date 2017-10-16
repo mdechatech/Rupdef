@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73fbed13d663ab742a8a69293d081be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Include: 1
   IsBeingPlaced: 0
   Name: Chest
   Price: 10

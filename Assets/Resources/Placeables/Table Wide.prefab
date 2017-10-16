@@ -22,9 +22,8 @@ GameObject:
   - component: {fileID: 212912909587314244}
   - component: {fileID: 61386067805627212}
   - component: {fileID: 114320617622116578}
-  - component: {fileID: 114789053866279036}
   m_Layer: 9
-  m_Name: Pot
+  m_Name: Table Wide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37,7 +36,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1693205823032818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.8035915, y: 1.1005845, z: 0}
+  m_LocalPosition: {x: -1.076386, y: -0.72481966, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -59,14 +58,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.48, y: 0.48}
+    oldSize: {x: 1.44, y: 0.48}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.44, y: 0.44}
+  m_Size: {x: 1.4, y: 0.44}
   m_EdgeRadius: 0
 --- !u!114 &114320617622116578
 MonoBehaviour:
@@ -81,27 +80,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Include: 1
   IsBeingPlaced: 0
-  Name: Pot
-  Price: 5
-  TileSizeX: 1
+  Name: Table
+  Price: 17
+  TileSizeX: 3
   TileSizeY: 1
-  Flavor: Pots are easy to smash and attract the most attention. When smashed, you
-    have a chance to retrieve some of the Blupees as they scatter.
---- !u!114 &114789053866279036
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1693205823032818}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a37dca05d90285c4181fd897dc9cbe1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Bupees: 0
-  Capacity: 5
-  BlupeePrefab: {fileID: 114797045320096454, guid: 98cd159032461e446bd4a01b0c3adcc2,
-    type: 2}
+  Flavor: A very long dining table. Long enough to fit your entire family, if they
+    would only visit.
 --- !u!212 &212912909587314244
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -134,7 +118,7 @@ SpriteRenderer:
   m_SortingLayerID: 289823493
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fc804c23dd314e04189d3ad2407a8ab1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a57182d1bcb4aa744b2af54876fab6de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

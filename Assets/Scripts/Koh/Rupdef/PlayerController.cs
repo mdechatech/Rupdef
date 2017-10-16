@@ -55,6 +55,11 @@ namespace Koh.Rupdef
         public float TalkTime;
         public float EnergyShovePrice;
 
+        [Space]
+        public AudioSource TalkSource;
+
+        public AudioClip TalkLoop;
+
 
         [Header("Placement")]
         public bool PlaceMode;
@@ -129,6 +134,7 @@ namespace Koh.Rupdef
         private void Update()
         {
             UpdateTalking();
+            UpdateAudio();
 
             InputX = Input.GetAxis(MoveAxisX);
             InputY = Input.GetAxis(MoveAxisY);
@@ -321,7 +327,10 @@ namespace Koh.Rupdef
                 return;
 
             if (CurrentPlaceable.Price > SpendAmount)
+            {
+                GameManager.Instance.Ui.ShowError("NUH-UH", "You can't afford that!", 3f);
                 return;
+            }
 
 
             var testCollider = CurrentPlaceable.GetComponentInChildren<BoxCollider2D>();
@@ -338,6 +347,7 @@ namespace Koh.Rupdef
                 if (amount > 0)
                 {
                     testCollider.enabled = false;
+                    GameManager.Instance.Ui.ShowError("NO WAY", "You need a clear space to put down furniture!", 3);
                     return;
                 }
 
@@ -471,8 +481,8 @@ namespace Koh.Rupdef
                         {
                             Tooltip.ActionGroup.alpha = 0;
                             Tooltip.StorageGroup.alpha = 1;
-                            Tooltip.StorageKeyText.gameObject.SetActive(true);
 
+                            Tooltip.StorageKeyText.text = "-SPACE-";
                             Tooltip.StorageTargetText.text = TargetPlaceable.Name;
                             Tooltip.StorageAmountText.text = chest.Bupees.ToString();
                             Tooltip.StorageMaxText.text = chest.Capacity.ToString();
@@ -487,6 +497,7 @@ namespace Koh.Rupdef
                             Tooltip.StorageGroup.alpha = 1;
                             Tooltip.StorageKeyText.gameObject.SetActive(true);
 
+                            Tooltip.StorageKeyText.text = "-SPACE-";
                             Tooltip.StorageTargetText.text = TargetPlaceable.Name;
                             Tooltip.StorageAmountText.text = pot.Bupees.ToString();
                             Tooltip.StorageMaxText.text = pot.Capacity.ToString();
@@ -614,6 +625,20 @@ namespace Koh.Rupdef
                 Energy = EnergyMax;
         }
 
+        private void UpdateAudio()
+        {
+            if (TalkTimer > 0 && !TalkSource.isPlaying)
+            {
+                TalkSource.clip = TalkLoop;
+                TalkSource.loop = true;
+                TalkSource.Play();
+            }
+            else if (TalkTimer <= 0 && TalkSource.isPlaying)
+            {
+                TalkSource.Stop();
+            }
+        }
+
         private void UpdateBlupeeSearch()
         {
             if ((BlupeeSearchTimer -= Time.fixedDeltaTime) <= 0)
@@ -630,6 +655,7 @@ namespace Koh.Rupdef
                 if (blupeeGet)
                 {
                     Destroy(blupeeGet.gameObject);
+                    GameManager.Instance.PlayGainSound();
                     ++SalvagedAmount;
                 }
             }
@@ -648,6 +674,7 @@ namespace Koh.Rupdef
             ++chest.Bupees;
             --HideAmount;
             ++HiddenAmount;
+            GameManager.Instance.PlayGainSound();
         }
 
         private void HandlePot(Pot pot)
@@ -661,6 +688,7 @@ namespace Koh.Rupdef
             ++pot.Bupees;
             --HideAmount;
             ++HiddenAmount;
+            GameManager.Instance.PlayGainSound();
         }
 
         #endregion

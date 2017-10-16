@@ -144,7 +144,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4096
   ActionInterval: 0.5
+  SlowFactor: 0.5
+  SlowMask:
+    serializedVersion: 2
+    m_Bits: 16384
+  BoringFactor: 0.5
+  BoringMask:
+    serializedVersion: 2
+    m_Bits: 32768
+  AreaSearchRadius: 0.24
   Waypoint: 0
+  NormalSpeed: 0
   TargetPot: {fileID: 0}
   TargetChest: {fileID: 0}
   TargetDoor: {fileID: 0}

@@ -27,8 +27,16 @@ namespace Koh.Rupdef
 
         public float ActionInterval;
 
+        public float SlowFactor;
+        public LayerMask SlowMask;
+        public float BoringFactor;
+        public LayerMask BoringMask;
+        public float AreaSearchRadius;
+
         [Header("Debug")]
         public int Waypoint;
+
+        public float NormalSpeed;
 
         public Pot TargetPot;
         public Chest TargetChest;
@@ -51,6 +59,7 @@ namespace Koh.Rupdef
 
         private void Awake()
         {
+            NormalSpeed = Speed;
             Seeker = GetComponent<Seeker>();
             Rigidbody = GetComponent<Rigidbody2D>();
         }
@@ -149,8 +158,11 @@ namespace Koh.Rupdef
                 .OrderBy(blupee => Vector2.Distance(blupee.transform.position, transform.position))
                 .FirstOrDefault();
 
-            if(blupeeGet)
+            if (blupeeGet)
+            {
+                GameManager.Instance.PlayLoseSound();
                 Destroy(blupeeGet.gameObject);
+            }
         }
 
         private void TryAction()
@@ -177,6 +189,7 @@ namespace Koh.Rupdef
                 {
                     --chest.Bupees;
                     --GameManager.Instance.Player.HiddenAmount;
+                    GameManager.Instance.PlayLoseSound();
                     ActionTimer = ActionInterval * 1.5f;
                     return true;
                 }
@@ -187,6 +200,7 @@ namespace Koh.Rupdef
             {
                 if (pot.Bupees > 0)
                 {
+                    GameManager.Instance.PlayLoseSound();
                     GameManager.Instance.Player.HiddenAmount -= pot.Bupees;
                     pot.Smash();
                     return true;
@@ -208,9 +222,19 @@ namespace Koh.Rupdef
 
             UpdateExit();
             UpdatePath();
+            UpdateAreas();
             UpdateObjects();
             UpdateBlupees();
             UpdateActions();
+        }
+
+        private void UpdateAreas()
+        {
+            var slow = Physics2D.OverlapCircle(transform.position, AreaSearchRadius, SlowMask);
+            Speed = slow ? NormalSpeed * SlowFactor : NormalSpeed;
+
+            var boring = Physics2D.OverlapCircle(transform.position, AreaSearchRadius, BoringMask);
+            Boredom -= boring ? (Time.fixedDeltaTime * BoringFactor) : 0;
         }
 
         private void UpdateExit()
@@ -220,7 +244,6 @@ namespace Koh.Rupdef
                 var distance = Vector2.Distance(transform.position, TargetDoor.position);
                 if (distance <= ExitRadius)
                 {
-                    print("cya");
                     Destroy(gameObject);
                 }
             }

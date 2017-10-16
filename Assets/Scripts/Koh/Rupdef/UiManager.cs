@@ -11,6 +11,7 @@ namespace Koh.Rupdef
         [Space]
         public Text SpendAmountText;
         public Text HideAmountText;
+        public Text NightText;
 
         [Space]
         public Text PlaceActionText;
@@ -102,6 +103,8 @@ namespace Koh.Rupdef
             ShowingError = true;
             ErrorTitleText.text = title;
             ErrorDescriptionText.text = text;
+
+            GameManager.Instance.PlayErrorSound();
         }
     }
 }

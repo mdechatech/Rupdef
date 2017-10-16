@@ -9,45 +9,45 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1394955946167224}
+  m_RootGameObject: {fileID: 1837023256608648}
   m_IsPrefabParent: 1
---- !u!1 &1394955946167224
+--- !u!1 &1837023256608648
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4563416033600010}
-  - component: {fileID: 212861542558828738}
-  - component: {fileID: 61843160339979128}
-  - component: {fileID: 114855030633297706}
+  - component: {fileID: 4498128763350902}
+  - component: {fileID: 212362064474759320}
+  - component: {fileID: 61526581080610420}
+  - component: {fileID: 114945881801324088}
   m_Layer: 9
-  m_Name: Small Table
+  m_Name: Table High
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4563416033600010
+--- !u!4 &4498128763350902
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1394955946167224}
+  m_GameObject: {fileID: 1837023256608648}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.2, y: -0.47, z: 0}
+  m_LocalPosition: {x: 1.570339, y: -0.4566654, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61843160339979128
+--- !u!61 &61526581080610420
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1394955946167224}
+  m_GameObject: {fileID: 1837023256608648}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -58,39 +58,40 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.48, y: 0.48}
+    oldSize: {x: 0.48, y: 1.44}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.44, y: 0.44}
+  m_Size: {x: 0.44, y: 1.4}
   m_EdgeRadius: 0
---- !u!114 &114855030633297706
+--- !u!114 &114945881801324088
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1394955946167224}
+  m_GameObject: {fileID: 1837023256608648}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73fbed13d663ab742a8a69293d081be5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Include: 1
   IsBeingPlaced: 0
-  Name: Stool
-  Price: 5
-  TileSizeX: 1
+  Name: Table
+  Price: 17
+  TileSizeX: 3
   TileSizeY: 1
-  Flavor: A plain wooden stool. Because Lonk is a young orlf, he is too short to climb
-    over them.
---- !u!212 &212861542558828738
+  Flavor: A very long dining table. Long enough to fit your entire family, if they
+    would only visit.
+--- !u!212 &212362064474759320
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1394955946167224}
+  m_GameObject: {fileID: 1837023256608648}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -117,7 +118,7 @@ SpriteRenderer:
   m_SortingLayerID: 289823493
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 014c9052aa1d48540a251e32d8d8abe3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e706a4599a6c29341942f4010eeb63b0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Placeable : MonoBehaviour
 {
+    public bool Include;
     public bool IsBeingPlaced;
 
     public string Name;

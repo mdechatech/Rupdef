@@ -11,6 +11,11 @@ namespace Koh.Rupdef
         public int PensionBase;
         public int PensionPerDay;
 
+        public AnimationCurve EnemiesPerDay;
+        public float EnemiesVariance;
+        public float EnemyInterval;
+        public float EnemyIntervalVariance;
+
         public int StartingSpendAmount;
 
         public int HideAmountBase;
@@ -24,15 +29,34 @@ namespace Koh.Rupdef
         [Range(0, 1)]
         public float BoredomVariance;
 
+        public float SpawnInterval;
+
+
         public LayerMask ObstacleMask;
 
         [Space]
         public int FinishCheckInterval;
         public string StartButton;
 
+        [Space]
+        public AudioSource BgmSource;
+
+        public AudioSource FxSource;
+
+        public AudioClip GainSound;
+        public AudioClip LoseSound;
+        public AudioClip ErrorSound;
+
+        public AudioClip BuildMusic;
+        public AudioClip DefendMusic;
+
         [Header("Debug")]
         public int Wave;
         public AstarPath Graph;
+
+        public int EnemiesToSpawn;
+        public float EnemySpawnTimer;
+
 
         public int PotsSmashed;
 
@@ -59,6 +83,10 @@ namespace Koh.Rupdef
 
         private void Start()
         {
+            BgmSource.loop = true;
+            BgmSource.clip = BuildMusic;
+            BgmSource.Play();
+
             Player.SpendAmount = StartingSpendAmount;
             Player.HideAmount = HideAmountBase;
             Player.BeginPlaceMode();
@@ -77,7 +105,7 @@ namespace Koh.Rupdef
             Player = FindObjectOfType<PlayerController>();
             Graph = FindObjectOfType<AstarPath>();
             Placeables = Resources.LoadAll<Placeable>("Placeables")
-                .ToList()
+                .Where(placeable => placeable.Include)
                 .OrderBy(placeable => placeable.Price)
                 .ToArray();
         }
@@ -85,6 +113,24 @@ namespace Koh.Rupdef
         public void UpdateGraph()
         {
             Graph.Scan();
+        }
+
+        public void PlayGainSound()
+        {
+            FxSource.clip = GainSound;
+            FxSource.Play();
+        }
+
+        public void PlayLoseSound()
+        {
+            FxSource.clip = LoseSound;
+            FxSource.Play();
+        }
+
+        public void PlayErrorSound()
+        {
+            FxSource.clip = ErrorSound;
+            FxSource.Play();
         }
 
         private void Update()
@@ -103,8 +149,14 @@ namespace Koh.Rupdef
                         Ui.SuccessGroup.alpha = 0;
                         Ui.PlayModeGroup.alpha = 0;
                         Ui.PlaceModeGroup.alpha = 1;
+                        Ui.NightText.text = Wave.ToString();
                         WaitingForWaveConfirm = false;
+                        Player.Energy = 0;
                         Player.BeginPlaceMode();
+
+                        BgmSource.loop = true;
+                        BgmSource.clip = BuildMusic;
+                        BgmSource.Play();
                     }
                 }
                 else
@@ -114,6 +166,21 @@ namespace Koh.Rupdef
                         FinishCheckTimer = FinishCheckInterval;
                         if (FindObjectsOfType<EnemyController>().Length == 0)
                             HandleWaveFinished();
+                    }
+
+                    if (EnemiesToSpawn > 0)
+                    {
+                        if ((EnemySpawnTimer -= Time.deltaTime) < 0)
+                        {
+                            EnemySpawnTimer = EnemyInterval +
+                                              Random.Range(-EnemyIntervalVariance, EnemyIntervalVariance);
+                            var door = Doors[UnityEngine.Random.Range(0, Doors.Length)];
+
+                            if (Player.HiddenAmount > 0)
+                                door.Spawn(BoredomBase + BoredomPerDay * Wave, BoredomVariance);
+
+                            --EnemiesToSpawn;
+                        }
                     }
                 }
                 
@@ -160,7 +227,6 @@ namespace Koh.Rupdef
             Ui.SuccessGroup.alpha = 0;
             FinishCheckTimer = 3;
             PotsSmashed = 0;
-
             if (Player.HideAmount > 0)
             {
                 Ui.ShowError("NEGATORY",
@@ -190,7 +256,21 @@ namespace Koh.Rupdef
 
             ++Wave;
             Ui.DayText.text = Wave.ToString();
-            Doors[0].Spawn(BoredomBase + BoredomPerDay * Wave, BoredomVariance);
+
+            var enemiesFloat = Mathf.Floor(EnemiesPerDay.Evaluate(Wave));
+            enemiesFloat += Random.Range(-EnemiesVariance, EnemiesVariance);
+            enemiesFloat = Mathf.Floor(enemiesFloat);
+            enemiesFloat = Mathf.Max(1, enemiesFloat);
+
+            EnemiesToSpawn = Mathf.RoundToInt(enemiesFloat);
+            EnemySpawnTimer = 0;
+
+            // Doors[0].Spawn(BoredomBase + BoredomPerDay * Wave, BoredomVariance);
+
+            BgmSource.loop = true;
+            BgmSource.clip = DefendMusic;
+            BgmSource.Play();
+
         }
 
         private bool BlupeesAreReachable()
@@ -218,7 +298,6 @@ namespace Koh.Rupdef
 
                 if (!possible)
                 {
-                    print("OH NO");
                     return false;
                 }
             }
